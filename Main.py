@@ -22,7 +22,7 @@ class Graph:
         self.time = 0
         for i in range(n):
             for j in range(n):
-                if np.random.random() > 1 - prob:
+                if np.random.random() < prob:
                     self.A[i, j] = 1
         for i in range(n):
             node = Node(i)
@@ -48,6 +48,8 @@ def DFS_visit(G, u):
             DFS_visit(G, v)
             G.order.append(v)
             G.SCC.append(v.id)
+    G.order.append(u)
+    G.SCC.append(u.id)
     u.color = "Black"
     G.time += 1
     u.f = G.time
@@ -79,7 +81,7 @@ def testProb():
     size = 100
     totAvgTimes = []
     totSCCount = []
-    prob = np.arange(0, 1, 0.01)
+    prob = np.arange(0, 0.1, 0.001)
     for i in prob:
         avgTime = 0
         SCCount = 0
@@ -97,7 +99,7 @@ def testProb():
     plt.show()
     plt.plot(prob, totAvgTimes)
     plt.xlabel("Probabilità")
-    plt.ylabel("tempo impiegato im ms")
+    plt.ylabel("Tempo impiegato in ms")
     plt.show()
 
 
@@ -119,12 +121,12 @@ def testSize():
         totSCCount.append(SCCount / nsamples)
         totAvgTimes.append(avgTime / nsamples * 1000)
     plt.plot(size, totSCCount)
-    plt.xlabel("Size")
+    plt.xlabel("Numero di nodi")
     plt.ylabel("Numero SCC")
     plt.show()
     plt.plot(size, totAvgTimes)
-    plt.xlabel("Size")
-    plt.ylabel("tempo impiegato im ms")
+    plt.xlabel("Numero di nodi")
+    plt.ylabel("Tempo impiegato in ms")
     plt.show()
 
 
